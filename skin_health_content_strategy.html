@@ -583,71 +583,6 @@
     vertical-align: middle;
   }
 
-  /* ── MIRO IFRAME BOX ── */
-  .iframe-box {
-    background: var(--section-bg);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--teal);
-    border-radius: 10px;
-    padding: 24px 28px;
-    margin-bottom: 72px;
-  }
-
-  .iframe-box h3 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-    color: var(--ink);
-  }
-
-  .iframe-box p {
-    font-size: 13px;
-    color: var(--mid);
-    margin-bottom: 16px;
-    line-height: 1.65;
-    max-width: 720px;
-  }
-
-  .iframe-box p + p { margin-top: -8px; }
-
-  .code-block {
-    background: #1a1a2e;
-    border-radius: 8px;
-    padding: 16px 20px;
-    font-family: 'Courier New', monospace;
-    font-size: 12.5px;
-    color: #a8d8c8;
-    word-break: break-all;
-    line-height: 1.7;
-    position: relative;
-    margin-bottom: 12px;
-  }
-
-  .copy-btn {
-    position: absolute;
-    top: 12px; right: 14px;
-    font-size: 11px; font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 5px;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(255,255,255,0.1);
-    color: #fff;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: background 0.15s;
-  }
-
-  .copy-btn:hover { background: rgba(255,255,255,0.22); }
-
-  code {
-    background: #eef1f5;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-size: 11.5px;
-    font-family: 'Courier New', monospace;
-    color: var(--ink);
-  }
-
   /* ── FOOTNOTE ── */
   .footnote {
     font-size: 12px;
@@ -772,8 +707,8 @@
       A hierarchical content structure for a skin health website, organised from root to article level. Click <strong>Skin Health</strong> to expand all pillars, then click any pillar or sub-category to drill down to individual article topics.
     </p>
     <div class="tree-controls">
-      <button class="tree-ctrl-btn active" onclick="ctSetAll(true)">Expand All</button>
-      <button class="tree-ctrl-btn" onclick="ctSetAll(false)">Collapse All</button>
+      <button class="tree-ctrl-btn" onclick="ctSetAll(true)">Expand All</button>
+      <button class="tree-ctrl-btn active" onclick="ctSetAll(false)">Collapse All</button>
     </div>
     <div id="categoryTree"></div>
   </section>
@@ -836,24 +771,6 @@
         <thead><tr><th>Pillar</th><th>Primary Content Types</th><th>Primary Intent</th><th>Priority</th></tr></thead>
         <tbody id="pillarMatrixRows"></tbody>
       </table>
-    </div>
-  </section>
-
-  <!-- MIRO IFRAME EMBED -->
-  <section>
-    <div class="section-label">Miro Embed Code</div>
-    <div class="iframe-box">
-      <h3>Embed this page in Miro</h3>
-      <p>To embed this document in a Miro board, host the HTML file at a public <code>https://</code> URL (e.g. GitHub Pages, Netlify, or your CMS), then use the code below. In Miro: click <strong>+</strong> → <strong>Embed</strong> → paste the URL directly, or use <strong>More apps → Embed</strong> and paste the full iframe code.</p>
-      <div class="code-block" id="urlBlock">
-        <button class="copy-btn" onclick="copySnippet('urlSnippet', this)">Copy</button>
-        <span id="urlSnippet">https://YOUR-DOMAIN/skin_health_content_strategy.html</span>
-      </div>
-      <p style="font-size:12px;color:var(--mid);margin-bottom:16px;margin-top:4px;">Or use the full iframe code (for CMS embeds, Notion, Confluence, etc.):</p>
-      <div class="code-block">
-        <button class="copy-btn" onclick="copySnippet('iframeSnippet', this)">Copy</button>
-        <span id="iframeSnippet">&lt;iframe src="https://YOUR-DOMAIN/skin_health_content_strategy.html" width="1200" height="800" style="border:none;border-radius:8px;" allowfullscreen&gt;&lt;/iframe&gt;</span>
-      </div>
     </div>
   </section>
 
@@ -1681,6 +1598,8 @@ function buildTreeV2(node, container, depth, inheritedColor) {
 }
 
 buildTreeV2(categoryTree, document.getElementById('categoryTree'), 0, null);
+// Default to collapsed
+setTimeout(() => ctSetAll(false), 0);
 
 function ctSetAll(open) {
   document.querySelectorAll('.ct-children').forEach(el => el.classList.toggle('open', open));
@@ -1692,12 +1611,7 @@ function ctSetAll(open) {
 
 
 
-function copySnippet(id, btn) {
-  navigator.clipboard.writeText(document.getElementById(id).textContent).then(() => {
-    btn.textContent = 'Copied!';
-    setTimeout(() => btn.textContent = 'Copy', 2000);
-  });
-}
+
 </script>
 </body>
 </html>
