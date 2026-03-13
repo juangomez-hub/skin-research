@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skin Health — Content Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --mid: #5a6a7a;
+    --border: #dde3ea;
+    --bg: #ffffff;
+    --section-bg: #f7f9fb;
+    --teal: #2A7D7D;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 56px 40px 100px;
+  }
+
+  header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 64px;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding-bottom: 40px;
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .brand-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    line-height: 1.1;
+    color: var(--ink);
+    max-width: 540px;
+  }
+
+  h1 em { font-style: italic; color: var(--teal); }
+
+  .header-desc {
+    font-size: 14px;
+    color: var(--mid);
+    margin-top: 12px;
+    max-width: 420px;
+    line-height: 1.7;
+  }
+
+  .header-meta {
+    text-align: right;
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.8;
+  }
+
+  .header-meta .big-num {
+    display: block;
+    color: var(--ink);
+    font-size: 2.2rem;
+    font-family: 'DM Serif Display', serif;
+    margin-bottom: 2px;
+    line-height: 1;
+  }
+
+  .header-meta .geo {
+    color: var(--teal);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  section { margin-bottom: 72px; }
+
+  /* ── BAR CHART ── */
+  .pillar-row {
+    display: grid;
+    grid-template-columns: 220px 1fr 72px;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    padding: 2px 0;
+  }
+
+  .pillar-row:hover .pillar-name { color: var(--ink); }
+  .pillar-row:hover .bar-fill { filter: brightness(1.08); }
+
+  .pillar-name {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--mid);
+    transition: color 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+  }
+
+  .pillar-name.active { font-weight: 600; }
+
+  .bar-track {
+    height: 32px;
+    background: var(--section-bg);
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 1.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.2s;
+    width: 0;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.95);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    opacity: 0.88;
+  }
+
+  .bar-vol {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--mid);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .expand-caret {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 10px;
+    color: var(--mid);
+    transition: transform 0.25s;
+  }
+
+  .expand-caret.open { transform: rotate(90deg); }
+
+  .subtopics {
+    margin-left: 236px;
+    margin-bottom: 18px;
+    display: none;
+    animation: fadeDown 0.25s ease;
+  }
+
+  .subtopics.open { display: block; }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .sub-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    padding: 8px 0 4px;
+  }
+
+  .sub-chip {
+    background: var(--section-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--mid);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .sub-chip:hover { background: #eef1f5; border-color: #ccd3dc; color: var(--ink); }
+
+  .sub-vol { font-weight: 600; font-size: 11px; color: var(--ink); }
+
+  /* ── HIERARCHY CARDS ── */
+  .tree {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .tree-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-top: 3px solid;
+  }
+
+  .tree-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+  }
+
+  .tree-card-title { font-size: 13.5px; font-weight: 600; color: var(--ink); margin-bottom: 4px; line-height: 1.3; }
+  .tree-card-vol   { font-size: 11px; color: var(--mid); margin-bottom: 14px; font-weight: 500; }
+
+  .tree-sub-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+
+  .tree-sub-list li {
+    font-size: 12px;
+    color: var(--mid);
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    line-height: 1.4;
+  }
+
+  /* ── BUBBLE ── */
+  .bubble-wrap {
+    background: var(--section-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  #bubbleCanvas { display: block; width: 100%; }
+
+  /* ── OPPORTUNITY MATRIX ── */
+  .matrix-outer { display: flex; align-items: stretch; gap: 10px; }
+
+  .y-axis-label {
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    flex-shrink: 0;
+  }
+
+  .matrix-inner { flex: 1; }
+
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .matrix-cell { background: var(--bg); padding: 22px; min-height: 190px; }
+
+  .matrix-cell-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .matrix-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11.5px;
+    font-weight: 500;
+    margin: 3px;
+    border: 1px solid;
+  }
+
+  .matrix-note { font-size: 11px; color: var(--mid); margin-top: 12px; line-height: 1.6; }
+
+  .axis-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--mid);
+    padding: 0 4px;
+    font-weight: 500;
+  }
+
+  /* ── TAXONOMY ── */
+  .taxonomy-intro {
+    font-size: 14px;
+    color: var(--mid);
+    line-height: 1.75;
+    max-width: 780px;
+    margin-bottom: 36px;
+  }
+
+  .taxonomy-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .taxonomy-table thead tr { border-bottom: 2px solid var(--ink); }
+  .taxonomy-table thead th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+  .taxonomy-table thead th:first-child { padding-left: 0; }
+  .taxonomy-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  .taxonomy-table tbody tr:hover { background: var(--section-bg); }
+  .taxonomy-table td { padding: 13px 14px; vertical-align: top; line-height: 1.55; }
+  .taxonomy-table td:first-child { padding-left: 0; font-weight: 600; color: var(--ink); white-space: nowrap; }
+  .taxonomy-table td:nth-child(2) { color: var(--mid); font-size: 12.5px; }
+
+  .intent-badge {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+  .intent-info  { background: #EBF4FF; color: #2563EB; }
+  .intent-nav   { background: #F0FDF4; color: #16A34A; }
+  .intent-trans { background: #FFF7ED; color: #C2410C; }
+  .intent-inv   { background: #F5F3FF; color: #7C3AED; }
+
+  .pillar-swatch {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* ── MIRO IFRAME BOX ── */
+  .iframe-box {
+    background: var(--section-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--teal);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 72px;
+  }
+
+  .iframe-box h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+
+  .iframe-box p {
+    font-size: 13px;
+    color: var(--mid);
+    margin-bottom: 16px;
+    line-height: 1.65;
+    max-width: 720px;
+  }
+
+  .iframe-box p + p { margin-top: -8px; }
+
+  .code-block {
+    background: #1a1a2e;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 12.5px;
+    color: #a8d8c8;
+    word-break: break-all;
+    line-height: 1.7;
+    position: relative;
+    margin-bottom: 12px;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 12px; right: 14px;
+    font-size: 11px; font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 5px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.15s;
+  }
+
+  .copy-btn:hover { background: rgba(255,255,255,0.22); }
+
+  code {
+    background: #eef1f5;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 11.5px;
+    font-family: 'Courier New', monospace;
+    color: var(--ink);
+  }
+
+  /* ── FOOTNOTE ── */
+  .footnote {
+    font-size: 12px;
+    color: var(--mid);
+    line-height: 1.8;
+    background: var(--section-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 22px;
+    border-left: 3px solid var(--teal);
+  }
+
+  .footnote strong { color: var(--ink); }
+
+  @media (max-width: 680px) {
+    .container { padding: 32px 20px 60px; }
+    .pillar-row { grid-template-columns: 130px 1fr 56px; }
+    .subtopics { margin-left: 0; }
+    .matrix-grid { grid-template-columns: 1fr; }
+    .matrix-outer { flex-direction: column; }
+    .y-axis-label { display: none; }
+    header { flex-direction: column; }
+    .header-meta { text-align: left; }
+    .taxonomy-table { font-size: 11.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div>
+      <div class="brand-tag">Content Strategy · Australia</div>
+      <h1>Skin Health<br><em>Search Opportunity</em></h1>
+      <p class="header-desc">Estimated monthly search volumes across skin health topic pillars. Click any bar to expand sub-topics.</p>
+    </div>
+    <div class="header-meta">
+      <span class="big-num">1.1M+</span>
+      estimated monthly searches<br>across all skin health topics<br>
+      <span class="geo">Australia · 2025–26</span>
+    </div>
+  </header>
+
+  <!-- BAR CHART -->
+  <section>
+    <div class="section-label">Search Volume by Pillar</div>
+    <div id="barChart"></div>
+  </section>
+
+  <!-- HIERARCHY CARDS -->
+  <section>
+    <div class="section-label">Hierarchical Topic Map</div>
+    <div class="tree" id="treeCards"></div>
+  </section>
+
+  <!-- BUBBLE -->
+  <section>
+    <div class="section-label">Search Volume — Bubble View</div>
+    <div class="bubble-wrap">
+      <canvas id="bubbleCanvas" height="420"></canvas>
+    </div>
+  </section>
+
+  <!-- OPPORTUNITY MATRIX -->
+  <section>
+    <div class="section-label">Content Opportunity Matrix</div>
+    <div class="matrix-outer">
+      <span class="y-axis-label">Search Volume →</span>
+      <div class="matrix-inner">
+        <div class="matrix-grid">
+          <div class="matrix-cell">
+            <div class="matrix-cell-label" style="color:#B45309;border-color:#FDE68A;">High Volume · Lower Competition</div>
+            <span class="matrix-tag" style="color:#92400E;border-color:#FCD34D;background:#FFFBEB">Eczema management</span>
+            <span class="matrix-tag" style="color:#92400E;border-color:#FCD34D;background:#FFFBEB">Skin cancer signs</span>
+            <span class="matrix-tag" style="color:#92400E;border-color:#FCD34D;background:#FFFBEB">Psoriasis treatment</span>
+            <span class="matrix-tag" style="color:#92400E;border-color:#FCD34D;background:#FFFBEB">Wound healing</span>
+            <span class="matrix-tag" style="color:#92400E;border-color:#FCD34D;background:#FFFBEB">UV safety</span>
+            <span class="matrix-tag" style="color:#92400E;border-color:#FCD34D;background:#FFFBEB">Skin checks</span>
+            <p class="matrix-note">Strong organic opportunity — prioritise here with condition-led health content.</p>
+          </div>
+          <div class="matrix-cell">
+            <div class="matrix-cell-label" style="color:#B91C1C;border-color:#FECACA;">High Volume · High Competition</div>
+            <span class="matrix-tag" style="color:#991B1B;border-color:#FCA5A5;background:#FFF5F5">Acne treatment</span>
+            <span class="matrix-tag" style="color:#991B1B;border-color:#FCA5A5;background:#FFF5F5">Skin cancer Australia</span>
+            <span class="matrix-tag" style="color:#991B1B;border-color:#FCA5A5;background:#FFF5F5">Melanoma symptoms</span>
+            <span class="matrix-tag" style="color:#991B1B;border-color:#FCA5A5;background:#FFF5F5">Sunburn treatment</span>
+            <span class="matrix-tag" style="color:#991B1B;border-color:#FCA5A5;background:#FFF5F5">Eczema in children</span>
+            <p class="matrix-note">Invest in authoritative long-form content. Clinical depth differentiates.</p>
+          </div>
+          <div class="matrix-cell">
+            <div class="matrix-cell-label" style="color:#166534;border-color:#BBF7D0;">Low Volume · Low Competition</div>
+            <span class="matrix-tag" style="color:#14532D;border-color:#86EFAC;background:#F0FDF4">Skin microbiome</span>
+            <span class="matrix-tag" style="color:#14532D;border-color:#86EFAC;background:#F0FDF4">Gut-skin axis</span>
+            <span class="matrix-tag" style="color:#14532D;border-color:#86EFAC;background:#F0FDF4">Skin in pregnancy</span>
+            <span class="matrix-tag" style="color:#14532D;border-color:#86EFAC;background:#F0FDF4">Tinea prevention</span>
+            <span class="matrix-tag" style="color:#14532D;border-color:#86EFAC;background:#F0FDF4">Skin & stress</span>
+            <p class="matrix-note">Fast ranking wins. Ideal for building topical authority and emerging search needs.</p>
+          </div>
+          <div class="matrix-cell">
+            <div class="matrix-cell-label" style="color:#5B21B6;border-color:#DDD6FE;">Lower Volume · Growing Trend</div>
+            <span class="matrix-tag" style="color:#4C1D95;border-color:#C4B5FD;background:#F5F3FF">Psychodermatology</span>
+            <span class="matrix-tag" style="color:#4C1D95;border-color:#C4B5FD;background:#F5F3FF">Skin barrier function</span>
+            <span class="matrix-tag" style="color:#4C1D95;border-color:#C4B5FD;background:#F5F3FF">Dermatillomania</span>
+            <span class="matrix-tag" style="color:#4C1D95;border-color:#C4B5FD;background:#F5F3FF">Chronic itch</span>
+            <span class="matrix-tag" style="color:#4C1D95;border-color:#C4B5FD;background:#F5F3FF">Skin & sleep</span>
+            <p class="matrix-note">Editorial and thought-leadership content. Builds brand authority in underserved territory.</p>
+          </div>
+        </div>
+        <div class="axis-labels">
+          <span>← Lower Competition</span>
+          <span>Higher Competition →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENT TAXONOMY -->
+  <section>
+    <div class="section-label">Content Taxonomy</div>
+    <p class="taxonomy-intro">
+      A structured framework for planning, tagging, and scaling skin health content. Each article should be assigned a <strong>Pillar</strong>, <strong>Content Type</strong>, <strong>Search Intent</strong>, and <strong>Audience Segment</strong>. This enables consistent taxonomy across CMS, SEO, and editorial planning.
+    </p>
+
+    <h2 style="font-family:'DM Serif Display',serif;font-size:1.3rem;margin-bottom:6px;color:var(--ink)">Dimension 1 — Content Type</h2>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:20px;line-height:1.6">What form does the content take? This determines structure, word count, and editorial format.</p>
+    <table class="taxonomy-table" style="margin-bottom:48px;">
+      <thead><tr><th>Content Type</th><th>Description</th><th>Typical Length</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td>Condition Overview</td><td>Comprehensive explainer covering causes, symptoms, diagnosis, and treatment options for a specific skin condition.</td><td>1,500–2,500w</td><td>What is eczema?, Understanding psoriasis, Melanoma explained</td></tr>
+        <tr><td>Symptom Guide</td><td>Helps readers identify whether their symptoms match a condition. Often structured with comparison tables.</td><td>800–1,500w</td><td>Is this rash eczema or psoriasis?, Signs of skin cancer to watch for</td></tr>
+        <tr><td>Treatment & Management</td><td>Explores medical and self-management options for a condition. Distinguishes GP, dermatologist, and at-home approaches.</td><td>1,000–2,000w</td><td>How is psoriasis treated?, Managing eczema flare-ups</td></tr>
+        <tr><td>Prevention & Risk Reduction</td><td>Evidence-based guidance on reducing the risk of developing or worsening a skin condition.</td><td>800–1,400w</td><td>How to reduce skin cancer risk, Preventing eczema triggers</td></tr>
+        <tr><td>When to See a Doctor</td><td>Decision-support content that helps readers know when self-management is insufficient and professional care is needed.</td><td>600–1,000w</td><td>When to see a GP about a mole, Should I see a dermatologist?</td></tr>
+        <tr><td>Explainer / FAQ</td><td>Answers specific, high-intent questions in a structured Q&A or short explainer format.</td><td>400–900w</td><td>What causes hives?, Can stress cause eczema?, Is psoriasis contagious?</td></tr>
+        <tr><td>Living With</td><td>Practical, empathetic content for people managing a chronic skin condition in daily life.</td><td>900–1,800w</td><td>Living with psoriasis at work, Eczema and mental health, Managing rosacea in summer</td></tr>
+        <tr><td>Research & News</td><td>Plain-language summaries of new studies, treatment advances, or policy changes relevant to skin health.</td><td>500–1,000w</td><td>New biologic treatments for psoriasis, Study links gut health to eczema</td></tr>
+        <tr><td>Statistics & Prevalence</td><td>Data-led content on how common a condition is in Australia, who it affects, and health system impact.</td><td>800–1,500w</td><td>Skin cancer statistics in Australia, How many Australians have eczema?</td></tr>
+        <tr><td>Care Pathway Guide</td><td>Explains how the Australian health system handles a skin condition — from GP referral to specialist care and follow-up.</td><td>900–1,600w</td><td>Getting a skin cancer check in Australia, Seeing a dermatologist on a referral</td></tr>
+      </tbody>
+    </table>
+
+    <h2 style="font-family:'DM Serif Display',serif;font-size:1.3rem;margin-bottom:6px;color:var(--ink)">Dimension 2 — Search Intent</h2>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:20px;line-height:1.6">Why is the user searching? Aligning content to intent is the strongest driver of organic performance.</p>
+    <table class="taxonomy-table" style="margin-bottom:48px;">
+      <thead><tr><th>Intent</th><th>User Goal</th><th>Signal Keywords</th><th>Best Content Types</th></tr></thead>
+      <tbody>
+        <tr><td><span class="intent-badge intent-info">Informational</span></td><td>Learn about a condition, symptom, or health topic</td><td>what is, what causes, how does, why do, can you get</td><td>Condition Overview, Explainer, Statistics</td></tr>
+        <tr><td><span class="intent-badge intent-nav">Navigational</span></td><td>Find a specific resource, doctor type, or service</td><td>dermatologist, skin check clinic, GP, Medicare, bulk billing</td><td>Care Pathway Guide, When to See a Doctor</td></tr>
+        <tr><td><span class="intent-badge intent-trans">Transactional</span></td><td>Take a specific action — book an appointment, find coverage, access treatment</td><td>book, find, near me, cost of, covered by, how to get</td><td>Care Pathway Guide, Treatment & Management</td></tr>
+        <tr><td><span class="intent-badge intent-inv">Investigational</span></td><td>Compare options or evaluate choices before deciding</td><td>vs, best, difference between, which treatment, should I</td><td>Symptom Guide, Treatment & Management, When to See a Doctor</td></tr>
+      </tbody>
+    </table>
+
+    <h2 style="font-family:'DM Serif Display',serif;font-size:1.3rem;margin-bottom:6px;color:var(--ink)">Dimension 3 — Audience Segment</h2>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:20px;line-height:1.6">Who is the primary reader? Content should be calibrated in language complexity, empathy, and clinical depth accordingly.</p>
+    <table class="taxonomy-table" style="margin-bottom:48px;">
+      <thead><tr><th>Segment</th><th>Profile</th><th>Key Content Needs</th><th>Tone</th></tr></thead>
+      <tbody>
+        <tr><td>Newly Diagnosed</td><td>Recently told they have a skin condition; high anxiety, low knowledge base</td><td>Clear explanations, what to expect, who to see, emotional reassurance</td><td>Warm, plain-language, reassuring</td></tr>
+        <tr><td>Long-term Condition Manager</td><td>Living with a chronic condition (psoriasis, eczema, rosacea) for years</td><td>Flare management, new treatments, living well, mental health support</td><td>Peer-like, practical, evidence-informed</td></tr>
+        <tr><td>Parent / Carer</td><td>Managing a child's or dependent's skin health</td><td>Paediatric-specific advice, safe treatments, school/daycare guidance</td><td>Empathetic, action-oriented, safety-focused</td></tr>
+        <tr><td>Prevention-Seeker</td><td>Motivated by sun safety, skin cancer screening, or general skin wellness</td><td>Risk factors, screening schedules, lifestyle advice, Australian-specific UV data</td><td>Empowering, evidence-based, practical</td></tr>
+        <tr><td>Symptom Researcher</td><td>Has noticed a new symptom or change and is self-triaging before seeing a doctor</td><td>Symptom identification, urgency signals, when to act</td><td>Clear, non-alarmist, action-guiding</td></tr>
+        <tr><td>Older Adults (55+)</td><td>Increased risk of skin cancers, ageing-related skin changes, chronic conditions</td><td>Skin cancer vigilance, age-related conditions, Medicare/specialist pathways</td><td>Respectful, authoritative, Australian-context aware</td></tr>
+      </tbody>
+    </table>
+
+    <h2 style="font-family:'DM Serif Display',serif;font-size:1.3rem;margin-bottom:6px;color:var(--ink)">Dimension 4 — Pillar × Content Type Priority Matrix</h2>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:20px;line-height:1.6">Which content types should be prioritised for each topic pillar, based on search intent patterns and audience readiness.</p>
+    <div style="overflow-x:auto;">
+      <table class="taxonomy-table" style="margin-bottom:0;">
+        <thead><tr><th>Pillar</th><th>Primary Content Types</th><th>Primary Intent</th><th>Priority</th></tr></thead>
+        <tbody id="pillarMatrixRows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- MIRO IFRAME EMBED -->
+  <section>
+    <div class="section-label">Miro Embed Code</div>
+    <div class="iframe-box">
+      <h3>Embed this page in Miro</h3>
+      <p>To embed this document in a Miro board, host the HTML file at a public <code>https://</code> URL (e.g. GitHub Pages, Netlify, or your CMS), then use the code below. In Miro: click <strong>+</strong> → <strong>Embed</strong> → paste the URL directly, or use <strong>More apps → Embed</strong> and paste the full iframe code.</p>
+      <div class="code-block" id="urlBlock">
+        <button class="copy-btn" onclick="copySnippet('urlSnippet', this)">Copy</button>
+        <span id="urlSnippet">https://YOUR-DOMAIN/skin_health_content_strategy.html</span>
+      </div>
+      <p style="font-size:12px;color:var(--mid);margin-bottom:16px;margin-top:4px;">Or use the full iframe code (for CMS embeds, Notion, Confluence, etc.):</p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copySnippet('iframeSnippet', this)">Copy</button>
+        <span id="iframeSnippet">&lt;iframe src="https://YOUR-DOMAIN/skin_health_content_strategy.html" width="1200" height="800" style="border:none;border-radius:8px;" allowfullscreen&gt;&lt;/iframe&gt;</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTNOTE -->
+  <div class="footnote">
+    <strong>Methodology:</strong> Search volumes are estimated monthly Australian figures derived from Google Trends directional signals, published SEO category benchmarks (SEMrush, Ahrefs), Statista health market reports, and Healthdirect Australia topic data. All figures are indicative and should be validated with a dedicated keyword research tool targeting AU geography before finalising content briefs.
+  </div>
+
+</div>
+
+<script>
+const pillars = [
+  { id: 'skin-cancer', name: 'Skin Cancer & Sun Safety', vol: 210000, color: '#D64045',
+    subtopics: [{ name: 'Skin cancer symptoms & signs', vol: 62000 },{ name: 'Melanoma diagnosis & staging', vol: 42000 },{ name: 'Skin checks & screening', vol: 36000 },{ name: 'UV radiation & sun exposure risks', vol: 28000 },{ name: 'Sunburn treatment & recovery', vol: 17000 },{ name: 'Basal & squamous cell carcinoma', vol: 14000 },{ name: 'Moles & atypical lesions', vol: 11000 }],
+    subs: ['Melanoma', 'Basal Cell Carcinoma', 'Squamous Cell Carcinoma', 'Merkel Cell Carcinoma', 'Skin checks / screening', 'UV radiation risks', 'Sunburn & recovery', 'Moles & atypical lesions', 'ABCDE rule', 'Photodynamic therapy'],
+    primaryTypes: 'Condition Overview, Symptom Guide, Prevention', intent: 'Informational / Investigational', priority: 'Critical' },
+  { id: 'acne', name: 'Acne & Breakouts', vol: 155000, color: '#E07B39',
+    subtopics: [{ name: 'Acne types & causes', vol: 50000 },{ name: 'Hormonal acne in adults', vol: 28000 },{ name: 'Cystic & nodular acne', vol: 22000 },{ name: 'Acne scarring & post-inflammatory marks', vol: 21000 },{ name: 'Teen acne & puberty', vol: 18000 },{ name: 'Acne treatment pathways (GP & dermatologist)', vol: 16000 }],
+    subs: ['Comedonal acne', 'Hormonal acne', 'Cystic acne', 'Acne vulgaris', 'Back & body acne', 'Acne scars', 'Rosacea', 'Perioral dermatitis', 'GP vs dermatologist pathway'],
+    primaryTypes: 'Treatment & Management, Symptom Guide, When to See a Doctor', intent: 'Informational / Investigational', priority: 'Critical' },
+  { id: 'eczema', name: 'Eczema & Dermatitis', vol: 130000, color: '#3B82C4',
+    subtopics: [{ name: 'Eczema causes & triggers', vol: 46000 },{ name: 'Eczema in babies & children', vol: 30000 },{ name: 'Eczema flare management', vol: 24000 },{ name: 'Contact dermatitis (allergic & irritant)', vol: 16000 },{ name: 'Seborrhoeic dermatitis', vol: 9000 },{ name: 'Dyshidrotic eczema', vol: 5000 }],
+    subs: ['Atopic dermatitis', 'Contact dermatitis', 'Seborrhoeic dermatitis', 'Dyshidrotic eczema', 'Nummular eczema', 'Baby & child eczema', 'Eczema triggers', 'Wet wrapping therapy', 'Dupilumab & biologics'],
+    primaryTypes: 'Living With, Treatment & Management, Prevention', intent: 'Informational / Navigational', priority: 'Critical' },
+  { id: 'psoriasis', name: 'Psoriasis', vol: 75000, color: '#5B9E6F',
+    subtopics: [{ name: 'Psoriasis symptoms & types', vol: 28000 },{ name: 'Psoriasis treatment (topical, systemic, biologic)', vol: 22000 },{ name: 'Scalp psoriasis', vol: 14000 },{ name: 'Psoriatic arthritis', vol: 11000 }],
+    subs: ['Plaque psoriasis', 'Guttate psoriasis', 'Pustular psoriasis', 'Scalp psoriasis', 'Nail psoriasis', 'Psoriatic arthritis', 'Biologic treatments', 'Light therapy (PUVA/NB-UVB)', 'Psoriasis & comorbidities'],
+    primaryTypes: 'Condition Overview, Living With, Care Pathway Guide', intent: 'Informational / Investigational', priority: 'High' },
+  { id: 'wound', name: 'Wound Care & Skin Healing', vol: 68000, color: '#7B5EA7',
+    subtopics: [{ name: 'Wound healing stages', vol: 22000 },{ name: 'Infected wound symptoms', vol: 18000 },{ name: 'Chronic wounds & ulcers', vol: 12000 },{ name: 'Scar formation & management', vol: 10000 },{ name: 'Post-surgical wound care', vol: 6000 }],
+    subs: ['Acute vs chronic wounds', 'Leg ulcers', 'Pressure injuries', 'Diabetic foot wounds', 'Surgical wound care', 'Keloid & hypertrophic scars', 'Wound infection signs', 'Wound dressings & treatment'],
+    primaryTypes: 'Treatment & Management, When to See a Doctor, Explainer', intent: 'Informational / Transactional', priority: 'High' },
+  { id: 'ageing', name: 'Skin Ageing', vol: 62000, color: '#C4873B',
+    subtopics: [{ name: 'Causes of skin ageing (intrinsic & extrinsic)', vol: 22000 },{ name: 'Age spots & pigmentation', vol: 16000 },{ name: 'Skin laxity & loss of elasticity', vol: 11000 },{ name: 'Ageing skin in men', vol: 7000 },{ name: 'Skin ageing & menopause', vol: 6000 }],
+    subs: ['Intrinsic vs photoageing', 'Wrinkles & fine lines', 'Age spots / solar lentigines', 'Skin laxity', 'Thinning skin', 'Skin ageing in menopause', 'Collagen loss', 'Skin ageing prevention'],
+    primaryTypes: 'Condition Overview, Prevention, Explainer', intent: 'Informational', priority: 'High' },
+  { id: 'infections', name: 'Infectious Skin Conditions', vol: 55000, color: '#3B9E9E',
+    subtopics: [{ name: 'Tinea / fungal skin infections', vol: 18000 },{ name: 'Impetigo & bacterial skin infections', vol: 12000 },{ name: 'Shingles (herpes zoster)', vol: 11000 },{ name: 'Warts & molluscum contagiosum', vol: 8000 },{ name: 'Cellulitis', vol: 6000 }],
+    subs: ['Tinea pedis / corporis / capitis', 'Impetigo', 'Cellulitis', 'Erysipelas', 'Shingles', 'Warts (verrucae)', 'Molluscum contagiosum', 'Scabies', 'Cold sores (HSV-1)', 'Folliculitis'],
+    primaryTypes: 'Symptom Guide, When to See a Doctor, Treatment & Management', intent: 'Informational / Investigational', priority: 'High' },
+  { id: 'allergy', name: 'Allergic Skin Reactions', vol: 48000, color: '#8C6BAE',
+    subtopics: [{ name: 'Hives (urticaria) causes & treatment', vol: 18000 },{ name: 'Allergic contact dermatitis', vol: 12000 },{ name: 'Angioedema', vol: 9000 },{ name: 'Drug-induced skin reactions', vol: 5000 },{ name: 'Anaphylaxis & skin symptoms', vol: 4000 }],
+    subs: ['Acute vs chronic urticaria', 'Allergic contact dermatitis', 'Angioedema', 'Drug hypersensitivity reactions', 'Photosensitivity reactions', 'Latex allergy', 'Nickel allergy', 'Food allergy skin manifestations'],
+    primaryTypes: 'Symptom Guide, Explainer, When to See a Doctor', intent: 'Informational / Investigational', priority: 'Medium' },
+  { id: 'nutrition', name: 'Skin Nutrition & Lifestyle', vol: 44000, color: '#4A7FA5',
+    subtopics: [{ name: 'Diet & skin health', vol: 16000 },{ name: 'Gut-skin connection', vol: 10000 },{ name: 'Skin microbiome health', vol: 7000 },{ name: 'Hydration & skin barrier', vol: 5000 },{ name: 'Sleep, stress & skin', vol: 4000 },{ name: 'Exercise & skin health', vol: 2000 }],
+    subs: ['Anti-inflammatory diet & skin', 'Gut-skin axis', 'Skin microbiome', 'Omega-3 & skin', 'Hydration & TEWL', 'Stress-induced skin conditions', 'Sleep deprivation & skin', 'Smoking & skin health'],
+    primaryTypes: 'Prevention, Explainer, Living With', intent: 'Informational', priority: 'Medium' },
+  { id: 'populations', name: 'Skin Health in Specific Populations', vol: 38000, color: '#C4545A',
+    subtopics: [{ name: 'Skin conditions in pregnancy', vol: 14000 },{ name: 'Baby & newborn skin', vol: 11000 },{ name: 'Skin health in older adults', vol: 7000 },{ name: 'Skin conditions in darker skin tones', vol: 6000 }],
+    subs: ['Skin in pregnancy (PUPPP, melasma, stretch marks)', 'Newborn rashes', 'Paediatric skin conditions', 'Skin in older adults (xerosis, purpura)', 'Skin conditions in darker skin tones', 'Immunocompromised patients', 'Occupational skin disease', 'Indigenous skin health'],
+    primaryTypes: 'Condition Overview, Prevention, Living With', intent: 'Informational / Navigational', priority: 'Medium' },
+  { id: 'inflammatory', name: 'Chronic Inflammatory Conditions', vol: 32000, color: '#6B9E6B',
+    subtopics: [{ name: 'Rosacea causes & management', vol: 14000 },{ name: 'Lupus skin manifestations', vol: 8000 },{ name: 'Hidradenitis suppurativa', vol: 6000 },{ name: 'Vitiligo', vol: 4000 }],
+    subs: ['Rosacea (subtypes)', 'Lupus (discoid & systemic)', 'Hidradenitis suppurativa', 'Vitiligo', 'Morphoea', 'Pemphigus & pemphigoid', 'Lichen planus', 'Granuloma annulare'],
+    primaryTypes: 'Condition Overview, Living With, Care Pathway Guide', intent: 'Informational / Investigational', priority: 'Medium' },
+  { id: 'mental', name: 'Mental Health & Skin', vol: 18000, color: '#7B7B3B',
+    subtopics: [{ name: 'Psychodermatology overview', vol: 6000 },{ name: 'Skin picking disorder (dermatillomania)', vol: 5000 },{ name: 'Body dysmorphic disorder & skin', vol: 4000 },{ name: 'Chronic itch & mental health', vol: 3000 }],
+    subs: ['Psychodermatology', 'Dermatillomania', 'Trichotillomania', 'Body dysmorphic disorder (BDD)', 'Delusional parasitosis', 'Chronic itch & anxiety', 'Skin conditions & depression', 'Itch-scratch cycle'],
+    primaryTypes: 'Explainer, Living With, When to See a Doctor', intent: 'Informational / Investigational', priority: 'Emerging' },
+];
+
+const priorityColors = { Critical: '#D64045', High: '#E07B39', Medium: '#3B82C4', Emerging: '#7B5EA7' };
+const maxVol = Math.max(...pillars.map(p => p.vol));
+
+// BAR CHART
+const barContainer = document.getElementById('barChart');
+pillars.forEach(p => {
+  const row = document.createElement('div');
+  row.className = 'pillar-row';
+  const nameEl = document.createElement('div');
+  nameEl.className = 'pillar-name';
+  nameEl.innerHTML = `${p.name} <span class="expand-caret">›</span>`;
+  const track = document.createElement('div');
+  track.className = 'bar-track';
+  const fill = document.createElement('div');
+  fill.className = 'bar-fill';
+  fill.style.background = p.color;
+  fill.dataset.target = (p.vol / maxVol * 100) + '%';
+  fill.textContent = fmt(p.vol);
+  track.appendChild(fill);
+  const volEl = document.createElement('div');
+  volEl.className = 'bar-vol';
+  volEl.textContent = fmt(p.vol);
+  row.appendChild(nameEl); row.appendChild(track); row.appendChild(volEl);
+  barContainer.appendChild(row);
+
+  const subWrap = document.createElement('div');
+  subWrap.className = 'subtopics';
+  const subGrid = document.createElement('div');
+  subGrid.className = 'sub-grid';
+  p.subtopics.forEach(st => {
+    const chip = document.createElement('div');
+    chip.className = 'sub-chip';
+    chip.innerHTML = `${st.name} <span class="sub-vol">${fmt(st.vol)}</span>`;
+    subGrid.appendChild(chip);
+  });
+  subWrap.appendChild(subGrid);
+  barContainer.appendChild(subWrap);
+  row.addEventListener('click', () => {
+    const open = subWrap.classList.toggle('open');
+    nameEl.classList.toggle('active', open);
+    nameEl.querySelector('.expand-caret').classList.toggle('open', open);
+    nameEl.style.color = open ? p.color : '';
+  });
+});
+setTimeout(() => document.querySelectorAll('.bar-fill').forEach(el => el.style.width = el.dataset.target), 120);
+
+// TREE CARDS
+const treeContainer = document.getElementById('treeCards');
+pillars.forEach(p => {
+  const card = document.createElement('div');
+  card.className = 'tree-card';
+  card.style.borderTopColor = p.color;
+  card.innerHTML = `
+    <div class="tree-card-title">${p.name}</div>
+    <div class="tree-card-vol" style="color:${p.color}">~${fmt(p.vol)} / month</div>
+    <ul class="tree-sub-list">
+      ${p.subs.map(s => `<li><span style="color:${p.color};font-weight:700;margin-right:4px">›</span>${s}</li>`).join('')}
+    </ul>`;
+  treeContainer.appendChild(card);
+});
+
+// BUBBLE CANVAS
+const canvas = document.getElementById('bubbleCanvas');
+const ctx = canvas.getContext('2d');
+function drawBubbles() {
+  const W = canvas.offsetWidth, H = 420;
+  canvas.width = W * devicePixelRatio; canvas.height = H * devicePixelRatio; canvas.style.height = H + 'px';
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+  ctx.fillStyle = '#f7f9fb'; ctx.fillRect(0, 0, W, H);
+  const maxR = Math.min(W * 0.1, 72), minR = 18;
+  const cols = Math.max(4, Math.floor(W / (maxR * 2.5)));
+  const bubbles = pillars.map((p, i) => {
+    const col = i % cols, row = Math.floor(i / cols), spacing = W / cols;
+    return { ...p, r: minR + (p.vol / maxVol) * (maxR - minR), x: spacing * col + spacing / 2, y: row * (maxR * 2.2 + 16) + (minR + (p.vol / maxVol) * (maxR - minR)) + 36 };
+  });
+  bubbles.forEach(b => {
+    ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+    ctx.fillStyle = b.color + '1A'; ctx.fill(); ctx.strokeStyle = b.color; ctx.lineWidth = 1.5; ctx.stroke();
+    const fs = Math.max(8.5, Math.min(12, b.r * 0.27));
+    ctx.font = `600 ${fs}px DM Sans,sans-serif`; ctx.fillStyle = '#1a1a2e'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const words = b.name.split(' '), lh = fs * 1.3, h = Math.ceil(words.length / 2);
+    const l1 = words.slice(0, h).join(' '), l2 = words.slice(h).join(' ');
+    if (l2) { ctx.fillText(l1, b.x, b.y - lh / 2); ctx.fillText(l2, b.x, b.y + lh / 2); } else ctx.fillText(l1, b.x, b.y);
+    const vfs = Math.max(7.5, Math.min(10, b.r * 0.2));
+    ctx.font = `500 ${vfs}px DM Sans,sans-serif`; ctx.fillStyle = b.color;
+    ctx.fillText(fmt(b.vol), b.x, b.y + (l2 ? lh * 1.3 : lh * 0.85));
+  });
+  ctx.fillStyle = '#9aabb8'; ctx.font = '11px DM Sans,sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('Bubble size = estimated monthly search volume', W / 2, H - 10);
+}
+drawBubbles();
+window.addEventListener('resize', () => setTimeout(drawBubbles, 80));
+
+// PILLAR MATRIX
+const tbody = document.getElementById('pillarMatrixRows');
+pillars.forEach(p => {
+  const tr = document.createElement('tr');
+  const pc = priorityColors[p.priority] || '#888';
+  tr.innerHTML = `
+    <td><span class="pillar-swatch" style="background:${p.color}"></span>${p.name}</td>
+    <td style="color:var(--mid);font-size:12.5px">${p.primaryTypes}</td>
+    <td><span class="intent-badge" style="background:${pc}18;color:${pc}">${p.intent}</span></td>
+    <td><span style="font-weight:700;color:${pc}">${p.priority}</span></td>`;
+  tbody.appendChild(tr);
+});
+
+function fmt(v) { return v >= 1000000 ? (v/1e6).toFixed(1)+'M' : v >= 1000 ? Math.round(v/1000)+'K' : String(v); }
+
+function copySnippet(id, btn) {
+  navigator.clipboard.writeText(document.getElementById(id).textContent).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+</script>
+</body>
+</html>
