@@ -326,6 +326,215 @@
     font-weight: 500;
   }
 
+  /* ── CATEGORY TREE ── */
+  .cat-tree-intro {
+    font-size: 14px;
+    color: var(--mid);
+    line-height: 1.75;
+    max-width: 780px;
+    margin-bottom: 32px;
+  }
+
+  .tree-controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .tree-ctrl-btn {
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+    color: var(--mid);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+
+  .tree-ctrl-btn:hover, .tree-ctrl-btn.active {
+    border-color: var(--teal);
+    color: var(--teal);
+    background: #f0fafa;
+  }
+
+  /* Root node */
+  .ct-root {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--teal);
+    color: #fff;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 0;
+    transition: filter 0.15s;
+  }
+
+  .ct-root:hover { filter: brightness(1.1); }
+
+  .ct-root-caret {
+    font-size: 12px;
+    transition: transform 0.25s cubic-bezier(0.34,1.4,0.64,1);
+    opacity: 0.8;
+  }
+
+  .ct-root-caret.open { transform: rotate(90deg); }
+
+  /* Connector lines */
+  .ct-level {
+    position: relative;
+    padding-left: 28px;
+    margin-top: 0;
+  }
+
+  .ct-level::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 16px;
+    width: 1.5px;
+    background: var(--border);
+  }
+
+  /* Each node row */
+  .ct-node {
+    position: relative;
+    margin-top: 6px;
+  }
+
+  .ct-node::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    top: 17px;
+    width: 16px;
+    height: 1.5px;
+    background: var(--border);
+  }
+
+  /* Node header (clickable row) */
+  .ct-node-header {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    padding: 7px 14px 7px 10px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    transition: background 0.12s, border-color 0.12s, box-shadow 0.12s;
+    max-width: 100%;
+  }
+
+  .ct-node-header:hover {
+    background: #f0f4f8;
+    border-color: #c5cfd9;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .ct-node-header.open {
+    border-color: var(--border);
+    font-weight: 600;
+  }
+
+  .ct-color-bar {
+    width: 4px;
+    border-radius: 2px;
+    align-self: stretch;
+    min-height: 18px;
+    flex-shrink: 0;
+  }
+
+  .ct-node-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  .ct-node-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .ct-node-caret {
+    font-size: 11px;
+    color: var(--mid);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+    margin-left: 2px;
+  }
+
+  .ct-node-caret.open { transform: rotate(90deg); }
+
+  /* Leaf node (no children) */
+  .ct-leaf {
+    position: relative;
+    margin-top: 5px;
+  }
+
+  .ct-leaf::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    top: 14px;
+    width: 16px;
+    height: 1.5px;
+    background: var(--border);
+  }
+
+  .ct-leaf-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: var(--section-bg);
+    border: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--mid);
+    transition: background 0.12s, color 0.12s;
+    cursor: default;
+  }
+
+  .ct-leaf-inner:hover {
+    background: #eef1f5;
+    color: var(--ink);
+  }
+
+  .ct-leaf-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Children container */
+  .ct-children {
+    display: none;
+    animation: ctFade 0.22s ease;
+  }
+
+  .ct-children.open { display: block; }
+
+  @keyframes ctFade {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: none; }
+  }
+
   /* ── TAXONOMY ── */
   .taxonomy-intro {
     font-size: 14px;
@@ -554,6 +763,19 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- CATEGORY TREE -->
+  <section>
+    <div class="section-label">Content Category Tree</div>
+    <p class="cat-tree-intro">
+      A hierarchical content structure for a skin health website, organised from root to article level. Click <strong>Skin Health</strong> to expand all pillars, then click any pillar or sub-category to drill down to individual article topics.
+    </p>
+    <div class="tree-controls">
+      <button class="tree-ctrl-btn active" onclick="ctSetAll(true)">Expand All</button>
+      <button class="tree-ctrl-btn" onclick="ctSetAll(false)">Collapse All</button>
+    </div>
+    <div id="categoryTree"></div>
   </section>
 
   <!-- CONTENT TAXONOMY -->
@@ -801,6 +1023,674 @@ pillars.forEach(p => {
 });
 
 function fmt(v) { return v >= 1000000 ? (v/1e6).toFixed(1)+'M' : v >= 1000 ? Math.round(v/1000)+'K' : String(v); }
+
+// ═══════════════════════════════════════════
+// CATEGORY TREE DATA
+// ═══════════════════════════════════════════
+const categoryTree = {
+  label: 'Skin Health',
+  children: [
+    {
+      label: 'Skin Cancer & Sun Safety',
+      color: '#D64045',
+      badge: '210K/mo',
+      children: [
+        {
+          label: 'Skin Cancer Types',
+          color: '#D64045',
+          children: [
+            { label: 'Melanoma — symptoms, staging & treatment' },
+            { label: 'Basal Cell Carcinoma — signs & removal' },
+            { label: 'Squamous Cell Carcinoma — causes & outlook' },
+            { label: 'Merkel Cell Carcinoma — rare skin cancer guide' },
+          ]
+        },
+        {
+          label: 'Detection & Screening',
+          color: '#D64045',
+          children: [
+            { label: 'How to do a skin self-check (ABCDE rule)' },
+            { label: 'Getting a skin cancer check in Australia' },
+            { label: 'What to expect at a skin cancer clinic' },
+            { label: 'Skin checks under Medicare — what\'s covered?' },
+            { label: 'Moles vs melanoma — when to be concerned' },
+          ]
+        },
+        {
+          label: 'Sun Safety & Prevention',
+          color: '#D64045',
+          children: [
+            { label: 'UV radiation in Australia — risks by state & season' },
+            { label: 'How to protect your skin from the sun' },
+            { label: 'Sunburn — treatment and recovery' },
+            { label: 'Skin cancer risk factors — who is most at risk?' },
+            { label: 'Skin cancer statistics in Australia' },
+          ]
+        },
+      ]
+    },
+    {
+      label: 'Acne & Breakouts',
+      color: '#E07B39',
+      badge: '155K/mo',
+      children: [
+        {
+          label: 'Types of Acne',
+          color: '#E07B39',
+          children: [
+            { label: 'Hormonal acne in adults — causes & treatment' },
+            { label: 'Cystic & nodular acne — what it is and how to treat it' },
+            { label: 'Teen acne — a guide for young people and parents' },
+            { label: 'Back and body acne — causes and management' },
+            { label: 'Rosacea vs acne — key differences' },
+          ]
+        },
+        {
+          label: 'Acne Causes & Triggers',
+          color: '#E07B39',
+          children: [
+            { label: 'What causes acne?' },
+            { label: 'Does diet affect acne?' },
+            { label: 'Stress and acne — is there a link?' },
+            { label: 'Hormones and skin breakouts' },
+          ]
+        },
+        {
+          label: 'Treatment & Scarring',
+          color: '#E07B39',
+          children: [
+            { label: 'Acne treatment options in Australia — GP to dermatologist' },
+            { label: 'When to see a doctor about acne' },
+            { label: 'Acne scars — types, prevention and treatment' },
+            { label: 'Perioral dermatitis — causes and management' },
+          ]
+        },
+      ]
+    },
+    {
+      label: 'Eczema & Dermatitis',
+      color: '#3B82C4',
+      badge: '130K/mo',
+      children: [
+        {
+          label: 'Types of Eczema',
+          color: '#3B82C4',
+          children: [
+            { label: 'Atopic dermatitis — overview and management' },
+            { label: 'Contact dermatitis — allergic vs irritant' },
+            { label: 'Seborrhoeic dermatitis — scalp and face' },
+            { label: 'Dyshidrotic eczema — blisters on hands and feet' },
+            { label: 'Nummular eczema — coin-shaped patches explained' },
+          ]
+        },
+        {
+          label: 'Eczema in Children',
+          color: '#3B82C4',
+          children: [
+            { label: 'Baby eczema — causes, symptoms and treatment' },
+            { label: 'Managing eczema in school-age children' },
+            { label: 'Wet wrapping therapy for children with eczema' },
+            { label: 'When to refer a child to a paediatric dermatologist' },
+          ]
+        },
+        {
+          label: 'Managing Eczema',
+          color: '#3B82C4',
+          children: [
+            { label: 'Eczema triggers — how to identify and avoid them' },
+            { label: 'Managing eczema flare-ups' },
+            { label: 'Eczema and mental health' },
+            { label: 'Biologic treatments for severe eczema (dupilumab)' },
+            { label: 'Living with eczema — daily skin care routines' },
+          ]
+        },
+      ]
+    },
+    {
+      label: 'Psoriasis',
+      color: '#5B9E6F',
+      badge: '75K/mo',
+      children: [
+        {
+          label: 'Types of Psoriasis',
+          color: '#5B9E6F',
+          children: [
+            { label: 'Plaque psoriasis — the most common form' },
+            { label: 'Guttate psoriasis — small drop-shaped patches' },
+            { label: 'Scalp psoriasis — symptoms and treatment' },
+            { label: 'Nail psoriasis — signs and management' },
+            { label: 'Pustular psoriasis — causes and treatment' },
+          ]
+        },
+        {
+          label: 'Treatment',
+          color: '#5B9E6F',
+          children: [
+            { label: 'Psoriasis treatment options — topical, systemic, biologic' },
+            { label: 'Light therapy (PUVA and NB-UVB) for psoriasis' },
+            { label: 'Biologic treatments and PBS access in Australia' },
+            { label: 'Psoriasis and comorbidities — heart, diabetes, mental health' },
+          ]
+        },
+        {
+          label: 'Living With Psoriasis',
+          color: '#5B9E6F',
+          children: [
+            { label: 'Psoriasis triggers — what to avoid' },
+            { label: 'Psoriatic arthritis — symptoms and joint care' },
+            { label: 'Living with psoriasis at work and socially' },
+            { label: 'Psoriasis and mental health — managing stigma' },
+          ]
+        },
+      ]
+    },
+    {
+      label: 'Wound Care & Skin Healing',
+      color: '#7B5EA7',
+      badge: '68K/mo',
+      children: [
+        {
+          label: 'Wound Types',
+          color: '#7B5EA7',
+          children: [
+            { label: 'Acute vs chronic wounds — what\'s the difference?' },
+            { label: 'Leg ulcers — causes, types and treatment' },
+            { label: 'Pressure injuries — prevention and management' },
+            { label: 'Diabetic foot wounds — care and risk reduction' },
+          ]
+        },
+        {
+          label: 'Wound Healing',
+          color: '#7B5EA7',
+          children: [
+            { label: 'The four stages of wound healing' },
+            { label: 'Signs of an infected wound — when to seek help' },
+            { label: 'Post-surgical wound care at home' },
+            { label: 'Wound dressings — types and when to use them' },
+          ]
+        },
+        {
+          label: 'Scars',
+          color: '#7B5EA7',
+          children: [
+            { label: 'Keloid scars — causes, prevention and treatment' },
+            { label: 'Hypertrophic scars — how they differ from keloids' },
+            { label: 'Atrophic scars — types and treatment options' },
+            { label: 'Scar management after surgery' },
+          ]
+        },
+      ]
+    },
+    {
+      label: 'Skin Ageing',
+      color: '#C4873B',
+      badge: '62K/mo',
+      children: [
+        {
+          label: 'Understanding Skin Ageing',
+          color: '#C4873B',
+          children: [
+            { label: 'Intrinsic vs photoageing — what\'s the difference?' },
+            { label: 'How the skin changes with age' },
+            { label: 'Skin ageing in menopause — what to expect' },
+            { label: 'Skin ageing in men' },
+          ]
+        },
+        {
+          label: 'Age-Related Skin Conditions',
+          color: '#C4873B',
+          children: [
+            { label: 'Age spots and solar lentigines — causes and treatment' },
+            { label: 'Skin laxity and loss of elasticity' },
+            { label: 'Wrinkles and fine lines — causes and management' },
+            { label: 'Thinning skin in older adults — care and prevention' },
+          ]
+        },
+        {
+          label: 'Prevention',
+          color: '#C4873B',
+          children: [
+            { label: 'How to slow skin ageing — evidence-based strategies' },
+            { label: 'Collagen loss — what it means and what you can do' },
+            { label: 'Sun protection and skin ageing' },
+          ]
+        },
+      ]
+    },
+    {
+      label: 'Infectious Skin Conditions',
+      color: '#3B9E9E',
+      badge: '55K/mo',
+      children: [
+        {
+          label: 'Fungal Infections',
+          color: '#3B9E9E',
+          children: [
+            { label: 'Tinea pedis (athlete\'s foot) — symptoms and treatment' },
+            { label: 'Tinea corporis (ringworm) — causes and management' },
+            { label: 'Tinea capitis (scalp ringworm) — especially in children' },
+            { label: 'Tinea versicolor — patchy skin discolouration' },
+          ]
+        },
+        {
+          label: 'Bacterial Infections',
+          color: '#3B9E9E',
+          children: [
+            { label: 'Impetigo — causes, symptoms and treatment' },
+            { label: 'Cellulitis — signs, risks and when to seek help' },
+            { label: 'Folliculitis — infected hair follicles explained' },
+            { label: 'Erysipelas — skin infection vs cellulitis' },
+          ]
+        },
+        {
+          label: 'Viral Infections',
+          color: '#3B9E9E',
+          children: [
+            { label: 'Shingles (herpes zoster) — symptoms, treatment and vaccine' },
+            { label: 'Warts (verrucae) — types and removal options' },
+            { label: 'Molluscum contagiosum — especially in children' },
+            { label: 'Cold sores (HSV-1) — triggers and management' },
+          ]
+        },
+        {
+          label: 'Parasitic Infections',
+          color: '#3B9E9E',
+          children: [
+            { label: 'Scabies — symptoms, treatment and preventing spread' },
+            { label: 'Head lice — treatment and prevention' },
+          ]
+        },
+      ]
+    },
+    {
+      label: 'Allergic Skin Reactions',
+      color: '#8C6BAE',
+      badge: '48K/mo',
+      children: [
+        {
+          label: 'Hives & Urticaria',
+          color: '#8C6BAE',
+          children: [
+            { label: 'What causes hives (urticaria)?' },
+            { label: 'Acute vs chronic urticaria — treatment options' },
+            { label: 'Angioedema — swelling beneath the skin' },
+            { label: 'Exercise-induced urticaria' },
+          ]
+        },
+        {
+          label: 'Contact & Drug Reactions',
+          color: '#8C6BAE',
+          children: [
+            { label: 'Allergic contact dermatitis — common triggers' },
+            { label: 'Nickel allergy — rashes from jewellery and metals' },
+            { label: 'Latex allergy and skin reactions' },
+            { label: 'Drug-induced skin reactions — types and management' },
+            { label: 'Photosensitivity reactions — sun and medication' },
+          ]
+        },
+        {
+          label: 'Severe Reactions',
+          color: '#8C6BAE',
+          children: [
+            { label: 'Anaphylaxis — skin symptoms and emergency response' },
+            { label: 'Food allergy skin manifestations' },
+            { label: 'When an allergic skin reaction needs urgent care' },
+          ]
+        },
+      ]
+    },
+    {
+      label: 'Skin Nutrition & Lifestyle',
+      color: '#4A7FA5',
+      badge: '44K/mo',
+      children: [
+        {
+          label: 'Diet & Skin',
+          color: '#4A7FA5',
+          children: [
+            { label: 'How diet affects skin health' },
+            { label: 'Anti-inflammatory foods for skin conditions' },
+            { label: 'Omega-3 fatty acids and skin health' },
+            { label: 'Does sugar cause acne and skin ageing?' },
+          ]
+        },
+        {
+          label: 'Gut-Skin Connection',
+          color: '#4A7FA5',
+          children: [
+            { label: 'The gut-skin axis — what the research says' },
+            { label: 'Skin microbiome — what it is and why it matters' },
+            { label: 'Probiotics and skin health' },
+            { label: 'Leaky gut and inflammatory skin conditions' },
+          ]
+        },
+        {
+          label: 'Lifestyle Factors',
+          color: '#4A7FA5',
+          children: [
+            { label: 'How stress affects the skin' },
+            { label: 'Sleep deprivation and skin health' },
+            { label: 'Exercise and skin — benefits and considerations' },
+            { label: 'Smoking and skin ageing' },
+            { label: 'Hydration and skin barrier function' },
+          ]
+        },
+      ]
+    },
+    {
+      label: 'Skin Health in Specific Populations',
+      color: '#C4545A',
+      badge: '38K/mo',
+      children: [
+        {
+          label: 'Pregnancy & Newborns',
+          color: '#C4545A',
+          children: [
+            { label: 'Skin changes during pregnancy — what\'s normal?' },
+            { label: 'PUPPP rash in pregnancy — symptoms and relief' },
+            { label: 'Melasma (pregnancy mask) — causes and fading' },
+            { label: 'Stretch marks — prevention and treatment' },
+            { label: 'Common newborn rashes — what\'s normal vs concerning' },
+          ]
+        },
+        {
+          label: 'Children & Adolescents',
+          color: '#C4545A',
+          children: [
+            { label: 'Paediatric skin conditions — overview for parents' },
+            { label: 'Nappy rash — causes, treatment and prevention' },
+            { label: 'Cradle cap (infantile seborrhoeic dermatitis)' },
+            { label: 'Hand, foot and mouth disease — skin symptoms' },
+          ]
+        },
+        {
+          label: 'Older Adults',
+          color: '#C4545A',
+          children: [
+            { label: 'Skin changes in older adults — xerosis and fragility' },
+            { label: 'Senile purpura — skin bruising in older people' },
+            { label: 'Skin cancer risk after age 55' },
+            { label: 'Skin care for ageing skin — practical guide' },
+          ]
+        },
+        {
+          label: 'Diverse Populations',
+          color: '#C4545A',
+          children: [
+            { label: 'Skin conditions in darker skin tones — diagnosis challenges' },
+            { label: 'Occupational skin disease — at-risk industries' },
+            { label: 'Skin health in immunocompromised patients' },
+            { label: 'Indigenous skin health in Australia' },
+          ]
+        },
+      ]
+    },
+    {
+      label: 'Chronic Inflammatory Conditions',
+      color: '#6B9E6B',
+      badge: '32K/mo',
+      children: [
+        {
+          label: 'Rosacea',
+          color: '#6B9E6B',
+          children: [
+            { label: 'What is rosacea? Types and symptoms' },
+            { label: 'Rosacea triggers — how to identify yours' },
+            { label: 'Rosacea treatment — topical, oral and laser options' },
+            { label: 'Ocular rosacea — eye symptoms and management' },
+          ]
+        },
+        {
+          label: 'Autoimmune Skin Conditions',
+          color: '#6B9E6B',
+          children: [
+            { label: 'Lupus and the skin — discoid and systemic' },
+            { label: 'Vitiligo — causes, types and treatment' },
+            { label: 'Morphoea (localised scleroderma)' },
+            { label: 'Pemphigus and pemphigoid — blistering conditions' },
+          ]
+        },
+        {
+          label: 'Other Inflammatory Conditions',
+          color: '#6B9E6B',
+          children: [
+            { label: 'Hidradenitis suppurativa — a chronic skin condition' },
+            { label: 'Lichen planus — causes and management' },
+            { label: 'Granuloma annulare — ring-shaped skin condition' },
+          ]
+        },
+      ]
+    },
+    {
+      label: 'Mental Health & Skin',
+      color: '#7B7B3B',
+      badge: '18K/mo',
+      children: [
+        {
+          label: 'Psychodermatology',
+          color: '#7B7B3B',
+          children: [
+            { label: 'What is psychodermatology?' },
+            { label: 'How stress triggers and worsens skin conditions' },
+            { label: 'The itch-scratch cycle and psychological impact' },
+            { label: 'Chronic skin conditions and depression' },
+          ]
+        },
+        {
+          label: 'Skin-Focused Disorders',
+          color: '#7B7B3B',
+          children: [
+            { label: 'Dermatillomania (skin picking disorder) — signs and help' },
+            { label: 'Trichotillomania — hair and skin pulling' },
+            { label: 'Body dysmorphic disorder and skin concerns' },
+            { label: 'Delusional parasitosis — when to seek mental health support' },
+          ]
+        },
+        {
+          label: 'Support & Wellbeing',
+          color: '#7B7B3B',
+          children: [
+            { label: 'Coping with a chronic skin condition' },
+            { label: 'Skin conditions and self-esteem in young people' },
+            { label: 'When to seek mental health support alongside dermatology care' },
+          ]
+        },
+      ]
+    },
+  ]
+};
+
+// ═══════════════════════════════════════════
+// CATEGORY TREE RENDERER
+// ═══════════════════════════════════════════
+function buildTree(node, container, depth) {
+  if (depth === 0) {
+    // Root node
+    const root = document.createElement('div');
+    root.style.cssText = 'margin-bottom:0;';
+
+    const rootBtn = document.createElement('div');
+    rootBtn.className = 'ct-root';
+    rootBtn.innerHTML = `${node.label} <span class="ct-root-caret open">›</span>`;
+
+    const rootChildren = document.createElement('div');
+    rootChildren.className = 'ct-level ct-children open';
+    rootChildren.style.marginTop = '0';
+
+    rootBtn.addEventListener('click', () => {
+      const open = rootChildren.classList.toggle('open');
+      rootBtn.querySelector('.ct-root-caret').classList.toggle('open', open);
+    });
+
+    root.appendChild(rootBtn);
+    root.appendChild(rootChildren);
+    container.appendChild(root);
+
+    node.children.forEach(child => buildTree(child, rootChildren, 1));
+    return;
+  }
+
+  if (!node.children || node.children.length === 0) {
+    // Leaf node
+    const leaf = document.createElement('div');
+    leaf.className = 'ct-leaf';
+    const color = getAncestorColor(node, container) || '#5a6a7a';
+    leaf.innerHTML = `<div class="ct-leaf-inner"><span class="ct-leaf-dot" style="background:${color}20;border:1.5px solid ${color}60"></span>${node.label}</div>`;
+    container.appendChild(leaf);
+    return;
+  }
+
+  // Branch node
+  const nodeEl = document.createElement('div');
+  nodeEl.className = 'ct-node';
+
+  const header = document.createElement('div');
+  header.className = 'ct-node-header';
+
+  const colorBar = document.createElement('div');
+  colorBar.className = 'ct-color-bar';
+  colorBar.style.background = node.color || '#dde3ea';
+
+  const label = document.createElement('span');
+  label.className = 'ct-node-label';
+  label.textContent = node.label;
+
+  header.appendChild(colorBar);
+  header.appendChild(label);
+
+  if (node.badge) {
+    const badge = document.createElement('span');
+    badge.className = 'ct-node-badge';
+    badge.style.cssText = `background:${node.color}15;color:${node.color}`;
+    badge.textContent = node.badge;
+    header.appendChild(badge);
+  }
+
+  const caret = document.createElement('span');
+  caret.className = 'ct-node-caret open';
+  caret.textContent = '›';
+  header.appendChild(caret);
+
+  const children = document.createElement('div');
+  children.className = 'ct-level ct-children open';
+
+  header.addEventListener('click', () => {
+    const open = children.classList.toggle('open');
+    caret.classList.toggle('open', open);
+    header.classList.toggle('open', open);
+  });
+
+  nodeEl.appendChild(header);
+  nodeEl.appendChild(children);
+  container.appendChild(nodeEl);
+
+  node.children.forEach(child => {
+    // Pass color down to sub-categories that don't have their own
+    if (!child.color && node.color) child._inheritedColor = node.color;
+    buildTree(child, children, depth + 1);
+  });
+}
+
+function getAncestorColor(node, container) {
+  // Walk up to find the nearest color-bar ancestor
+  let el = container;
+  while (el) {
+    const bar = el.querySelector(':scope > .ct-node > .ct-node-header > .ct-color-bar');
+    if (bar) return bar.style.background;
+    const parentBar = el.closest('.ct-node')?.querySelector('.ct-color-bar');
+    if (parentBar) return parentBar.style.background;
+    el = el.parentElement;
+  }
+  return '#5a6a7a';
+}
+
+// Override leaf color extraction using data attribute approach
+function buildTreeV2(node, container, depth, inheritedColor) {
+  const color = node.color || inheritedColor || '#5a6a7a';
+
+  if (depth === 0) {
+    const root = document.createElement('div');
+    const rootBtn = document.createElement('div');
+    rootBtn.className = 'ct-root';
+    rootBtn.innerHTML = `${node.label} <span class="ct-root-caret open">›</span>`;
+    const rootChildren = document.createElement('div');
+    rootChildren.className = 'ct-level ct-children open';
+    rootBtn.addEventListener('click', () => {
+      const open = rootChildren.classList.toggle('open');
+      rootBtn.querySelector('.ct-root-caret').classList.toggle('open', open);
+    });
+    root.appendChild(rootBtn);
+    root.appendChild(rootChildren);
+    container.appendChild(root);
+    node.children.forEach(child => buildTreeV2(child, rootChildren, 1, color));
+    return;
+  }
+
+  if (!node.children || node.children.length === 0) {
+    const leaf = document.createElement('div');
+    leaf.className = 'ct-leaf';
+    leaf.innerHTML = `<div class="ct-leaf-inner"><span class="ct-leaf-dot" style="background:${color}25;border:1.5px solid ${color}70"></span>${node.label}</div>`;
+    container.appendChild(leaf);
+    return;
+  }
+
+  const nodeEl = document.createElement('div');
+  nodeEl.className = 'ct-node';
+
+  const header = document.createElement('div');
+  header.className = 'ct-node-header open';
+
+  const colorBar = document.createElement('div');
+  colorBar.className = 'ct-color-bar';
+  colorBar.style.background = color;
+  header.appendChild(colorBar);
+
+  const labelEl = document.createElement('span');
+  labelEl.className = 'ct-node-label';
+  if (depth === 1) labelEl.style.fontWeight = '600';
+  labelEl.textContent = node.label;
+  header.appendChild(labelEl);
+
+  if (node.badge) {
+    const badge = document.createElement('span');
+    badge.className = 'ct-node-badge';
+    badge.style.cssText = `background:${color}18;color:${color}`;
+    badge.textContent = node.badge;
+    header.appendChild(badge);
+  }
+
+  const caret = document.createElement('span');
+  caret.className = 'ct-node-caret open';
+  caret.textContent = '›';
+  header.appendChild(caret);
+
+  const children = document.createElement('div');
+  children.className = 'ct-level ct-children open';
+
+  header.addEventListener('click', () => {
+    const open = children.classList.toggle('open');
+    caret.classList.toggle('open', open);
+    header.classList.toggle('open', open);
+  });
+
+  nodeEl.appendChild(header);
+  nodeEl.appendChild(children);
+  container.appendChild(nodeEl);
+
+  node.children.forEach(child => buildTreeV2(child, children, depth + 1, color));
+}
+
+buildTreeV2(categoryTree, document.getElementById('categoryTree'), 0, null);
+
+function ctSetAll(open) {
+  document.querySelectorAll('.ct-children').forEach(el => el.classList.toggle('open', open));
+  document.querySelectorAll('.ct-node-caret').forEach(el => el.classList.toggle('open', open));
+  document.querySelectorAll('.ct-root-caret').forEach(el => el.classList.toggle('open', open));
+  document.querySelectorAll('.ct-node-header').forEach(el => el.classList.toggle('open', open));
+  document.querySelectorAll('.tree-ctrl-btn').forEach((b, i) => b.classList.toggle('active', open ? i === 0 : i === 1));
+}
+
+
 
 function copySnippet(id, btn) {
   navigator.clipboard.writeText(document.getElementById(id).textContent).then(() => {
